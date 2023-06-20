@@ -1,3 +1,7 @@
+
+import csv
+
+
 def mediana (diccionario):
 
     valores = []
@@ -13,8 +17,26 @@ def mediana (diccionario):
 
     return media
 
-def procesar(nombreFichero):
-    return
+def procesar(nombreFichero, curso):
+
+    estudiantes = []
+
+    try:
+
+        with open(nombreFichero, linea='') as csvfile:
+            f = csv.DictReader(csvfile)
+            for fila in f:
+                if int(fila['Curso']) == curso:
+                    estudiantes.append(fila['Nombre'] + ' ' + fila['Apellido'])
+        if not estudiantes:
+            raise ValueError('No se encuentra el dato')
+        
+
+    except ValueError as e:
+        return str(e)
+    
+
+    return estudiantes
 
 def combinar (diccionario1, diccionario2, diccionario3):
     return
@@ -34,7 +56,7 @@ def palabra_repetida(nombreFichero):
             contador_palabras[palabra] = 1
     palabra_mas_repetida = ''
     max_repeticiones = 0
-    
+
     for palabra, repeticiones in contador_palabras.items():
         if repeticiones > max_repeticiones:
             palabra_mas_repetida = palabra
