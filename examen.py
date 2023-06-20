@@ -17,29 +17,37 @@ def mediana (diccionario):
 
     return media
 
-def procesar(nombreFichero, curso):
+
+
+def procesar (fichero, nCurso):
+
+    f = open(fichero,mode="rt", encoding="utf-8")
+    linea = f.readline()
 
     estudiantes = []
 
-    try:
+    while linea != "":
+        linea = f.readline()
+        curso = linea.split(",")[-1]
 
-        with open(nombreFichero, linea='') as csvfile:
-            f = csv.DictReader(csvfile)
-            for fila in f:
-                if int(fila['Curso']) == curso:
-                    estudiantes.append(fila['Nombre'] + ' ' + fila['Apellido'])
-        if not estudiantes:
-            raise ValueError('No se encuentra el dato')
-        
-
-    except ValueError as e:
-        return str(e)
-    
+        if curso[0:1] == str(nCurso):
+            estudiantes.append(tuple(linea.split(",")))
 
     return estudiantes
 
+
+try:
+    lista_estudiantes = procesar("fichero.csv", 2)
+    print(lista_estudiantes)
+except ValueError as error:
+    print("Error:", str(error))
+    
+
+
 def combinar (diccionario1, diccionario2, diccionario3):
     return
+
+
 
 
 def palabra_repetida(nombreFichero):
@@ -69,6 +77,10 @@ def palabra_repetida(nombreFichero):
 #PRIMER EJERCICIO
 dic={'v0':5,'v1':3,'v2':8,'v3':1,'v4':6}
 print("Valor mediana: ",str(mediana(dic)))
+
+#SEGUNDO EJERCICIO
+ficheroCSV2 = 'alumnos.csv'
+print(procesar(ficheroCSV2,3))
 
 #CUARTO EJERCICIO
 ficheroTextoMasRepetidas = 'palabras.txt' #el fichero no lo encuentro en la tarea del examen 
